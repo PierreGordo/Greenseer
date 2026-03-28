@@ -16,3 +16,6 @@ target
 # RustRover
 # JetBrains specific template is maintained in a separate JetBrains.gitignore
 #.idea/
+
+# Enviromental variables
+.env
