@@ -1,215 +1,363 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GREENSEER - Tactical Interface</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600&family=Space+Grotesk:wght@400;700;800&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GREENSEER - Tactical Interface</title>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="config.js"></script>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body class="bg-surface text-on-surface font-sans h-screen overflow-hidden flex flex-col md:flex-row selection:bg-primary selection:text-on-primary">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600&family=Space+Grotesk:wght@400;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-  <div class="md:hidden bg-surface-container p-4 flex items-center justify-between border-b border-outline-ghost shrink-0 z-50">
-    <div class="flex items-center gap-3 font-space select-none">
-      <svg class="block shrink-0 w-8 h-8" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <path d="M 5,50 L 30,25 L 70,25 L 95,50 L 70,75 L 30,75 Z" fill="none" stroke="#6bff8f" stroke-width="3" />
-        <path d="M 12,50 L 32,32 L 68,32 L 88,50 L 68,68 L 32,68 Z" fill="#060e20" />
-        <path d="M 50,32 L 66,41 L 66,59 L 50,68 L 34,59 L 34,41 Z" fill="#0abc56" />
-        <path d="M 50,32 L 66,41 L 50,50 Z" fill="#6bff8f" opacity="0.5" />
-      </svg>
-      <div class="text-[20px] font-extrabold text-[#f8fafc] tracking-[0.15em] mt-1">GREEN<span class="text-primary font-light">SEER</span></div>
-    </div>
-    <button onclick="toggleMobileMenu()" class="text-primary p-2 border border-outline-variant hover:bg-surface-container-highest transition-colors">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-    </button>
-  </div>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="config.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
 
-  <div id="mobile-overlay" onclick="toggleMobileMenu()" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden"></div>
+  <body
+    class="bg-surface text-on-surface font-sans h-screen overflow-hidden flex flex-row selection:bg-primary selection:text-on-primary"
+  >
 
-  <div id="sidebar" class="fixed md:relative inset-y-0 left-0 z-50 w-[280px] md:w-[300px] bg-surface-container p-6 flex flex-col border-r border-outline-ghost transform -translate-x-full md:translate-x-0 transition-transform duration-300 shrink-0">
-    
-    <div class="hidden md:flex items-center gap-3 font-space select-none">
-      <svg class="block shrink-0" width="36" height="36" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <path d="M 5,50 L 30,25 L 70,25 L 95,50 L 70,75 L 30,75 Z" fill="none" stroke="#6bff8f" stroke-width="3" />
-        <path d="M 12,50 L 32,32 L 68,32 L 88,50 L 68,68 L 32,68 Z" fill="#060e20" />
-        <path d="M 50,32 L 66,41 L 66,59 L 50,68 L 34,59 L 34,41 Z" fill="#0abc56" />
-        <path d="M 50,32 L 66,41 L 50,50 Z" fill="#6bff8f" opacity="0.5" />
-        <path d="M 34,41 L 50,32 L 50,50 Z" fill="#005f28" opacity="0.3" />
-        <path d="M 50,40 L 56,50 L 50,60 L 44,50 Z" fill="#060e20" />
-        <path d="M 42,42 L 46,40 L 44,44 Z" fill="#ffffff" opacity="0.9" />
-      </svg>
-      <div class="text-[24px] font-extrabold text-[#f8fafc] tracking-[0.15em] mt-1">GREEN<span class="text-primary font-light">SEER</span></div>
-    </div>
-
-    <div class="mt-8 md:mt-16 flex flex-col gap-4 md:gap-6 flex-1">
-      <button onclick="switchTab('welcome-tab', this, 'System Overview')" class="nav-item border-l-2 border-primary bg-surface-container-highest text-primary p-4 text-left font-space uppercase tracking-[0.1em] transition-colors duration-200">
-        System Status
-      </button>
-      <button onclick="switchTab('map-tab', this, 'Tactical Map')" class="nav-item border-l-2 border-transparent text-outline-variant hover:bg-surface-container-highest hover:text-primary hover:border-primary p-4 text-left font-space uppercase tracking-[0.1em] transition-colors duration-200">
-        Tactical Map
-      </button>
-      <button onclick="switchTab('data-tab', this, 'Telemetry Array')" class="nav-item border-l-2 border-transparent text-outline-variant hover:bg-surface-container-highest hover:text-primary hover:border-primary p-4 text-left font-space uppercase tracking-[0.1em] transition-colors duration-200">
-        Asset Telemetry
-      </button>
-      
-      <button onclick="window.location.href='login.html'" class="mt-auto border-l-2 border-transparent text-error hover:bg-surface-container-highest p-4 text-left font-space uppercase tracking-[0.1em] transition-colors duration-200">
-        Terminate Link
-      </button>
-    </div>
-  </div>
-
-  <div class="flex-1 flex flex-col relative overflow-hidden h-full">
-    
-    <div class="p-8 md:p-16 md:pb-6 bg-surface shrink-0">
-      <div class="text-primary mb-2 tracking-[0.2em] uppercase font-space text-[0.7rem] md:text-[0.85rem]">System Online • Sector 7</div>
-      <h1 id="view-title" class="font-space text-[2rem] md:text-[3.5rem] leading-none text-on-surface md:-ml-1">System Overview</h1>
-    </div>
-
-    <div id="welcome-tab" class="workspace block flex-1 px-4 md:px-16 pb-8 md:pb-16 overflow-y-auto">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-        
-        <div class="col-span-1 md:col-span-2 bg-surface-container-low p-6 md:p-10 border border-outline-ghost relative overflow-hidden group">
-          <div class="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          <h2 class="font-space text-xl md:text-2xl text-primary mb-4 uppercase tracking-widest">Tactical Network Engaged</h2>
-          <p class="font-sans text-on-surface leading-relaxed max-w-3xl text-base md:text-lg mb-6">
-            Welcome to the GREENSEER command terminal. This interface monitors deployed military vehicles and armored assets across the current operational sector. Ensure positional awareness and monitor fuel/power telemetry to maintain operational readiness.
-          </p>
-          <button onclick="document.querySelectorAll('.nav-item')[1].click()" class="w-full md:w-auto border border-outline-ghost bg-transparent text-on-surface font-space font-bold uppercase tracking-widest px-6 py-3 hover:bg-surface-container-highest transition-colors duration-200">
-            Launch Map Viewer
-          </button>
+    <div
+      id="sidebar"
+      class="relative inset-y-0 left-0 z-50 w-[300px] bg-surface-container p-6 flex flex-col border-r border-outline-ghost shrink-0"
+    >
+      <div class="flex items-center gap-3 font-space select-none">
+        <svg
+          class="block shrink-0"
+          width="36"
+          height="36"
+          viewBox="0 0 100 100"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M 5,50 L 30,25 L 70,25 L 95,50 L 70,75 L 30,75 Z"
+            fill="none"
+            stroke="#6bff8f"
+            stroke-width="3"
+          />
+          <path
+            d="M 12,50 L 32,32 L 68,32 L 88,50 L 68,68 L 32,68 Z"
+            fill="#060e20"
+          />
+          <path
+            d="M 50,32 L 66,41 L 66,59 L 50,68 L 34,59 L 34,41 Z"
+            fill="#0abc56"
+          />
+          <path d="M 50,32 L 66,41 L 50,50 Z" fill="#6bff8f" opacity="0.5" />
+          <path d="M 34,41 L 50,32 L 50,50 Z" fill="#005f28" opacity="0.3" />
+          <path d="M 50,40 L 56,50 L 50,60 L 44,50 Z" fill="#060e20" />
+          <path d="M 42,42 L 46,40 L 44,44 Z" fill="#ffffff" opacity="0.9" />
+        </svg>
+        <div
+          class="text-[24px] font-extrabold text-[#f8fafc] tracking-[0.15em] mt-1"
+        >
+          GREEN<span class="text-primary font-light">SEER</span>
         </div>
+      </div>
 
-        <div class="bg-surface-container p-6 md:p-8">
-          <div class="text-outline-variant font-space uppercase tracking-widest text-xs md:text-sm mb-2">Active Assets</div>
-          <div class="font-space text-4xl md:text-5xl text-primary">02</div>
-        </div>
-        <div class="bg-surface-container p-6 md:p-8">
-          <div class="text-outline-variant font-space uppercase tracking-widest text-xs md:text-sm mb-2">Signal Integrity</div>
-          <div class="font-space text-4xl md:text-5xl text-[#dee5ff]">98.4%</div>
-        </div>
+      <div class="mt-16 flex flex-col gap-6 flex-1">
+        <button
+          onclick="switchTab('welcome-tab', this)"
+          class="nav-item border-l-2 border-primary bg-surface-container-highest text-primary p-4 text-left font-space uppercase tracking-[0.1em] transition-colors duration-200"
+        >
+          System Status
+        </button>
+        <button
+          onclick="switchTab('map-tab', this)"
+          class="nav-item border-l-2 border-transparent text-outline-variant hover:bg-surface-container-highest hover:text-primary hover:border-primary p-4 text-left font-space uppercase tracking-[0.1em] transition-colors duration-200"
+        >
+          Map
+        </button>
+        <button
+          onclick="switchTab('data-tab', this)"
+          class="nav-item border-l-2 border-transparent text-outline-variant hover:bg-surface-container-highest hover:text-primary hover:border-primary p-4 text-left font-space uppercase tracking-[0.1em] transition-colors duration-200"
+        >
+          Asset Telemetry
+        </button>
 
+        <button
+          onclick="window.location.href = 'login.html'"
+          class="mt-auto border-l-2 border-transparent text-error hover:bg-surface-container-highest p-4 text-left font-space uppercase tracking-[0.1em] transition-colors duration-200"
+        >
+          Log out
+        </button>
       </div>
     </div>
 
-    <div id="map-tab" class="workspace hidden flex-1 px-4 md:px-16 pb-8 md:pb-16 overflow-hidden">
-      <div class="w-full h-full bg-surface-container-low map-grid relative border border-outline-ghost overflow-hidden group">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,theme(colors.surface-container-low)_100%)] pointer-events-none"></div>
-        
-        <div class="absolute flex flex-col items-center gap-1 cursor-pointer hover:-translate-y-1 transition-transform duration-200" style="top: 30%; left: 45%;">
-          <div class="bg-secondary-container text-on-secondary-container px-[10px] md:px-[14px] py-[4px] md:py-[6px] font-space text-[0.65rem] md:text-[0.75rem] font-bold uppercase tracking-[0.1em] inline-flex items-center gap-2 clip-status">
-            <div class="w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_8px_theme(colors.primary)] animate-pulse"></div>HV-01
-          </div>
-          <div class="w-2 h-2 md:w-3 md:h-3 bg-primary shadow-[0_0_15px_theme(colors.primary)]"></div>
-        </div>
+    <div class="flex-1 flex flex-col relative overflow-hidden h-full">
 
-        <div class="absolute flex flex-col items-center gap-1 cursor-pointer hover:-translate-y-1 transition-transform duration-200" style="top: 60%; left: 70%;">
-          <div class="bg-secondary-container text-on-secondary-container px-[10px] md:px-[14px] py-[4px] md:py-[6px] font-space text-[0.65rem] md:text-[0.75rem] font-bold uppercase tracking-[0.1em] inline-flex items-center gap-2 clip-status">
-            <div class="w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_8px_theme(colors.primary)] animate-pulse" style="animation-delay: 0.5s"></div>HV-04
+      <div
+        id="welcome-tab"
+        class="workspace block flex-1 px-16 pt-16 pb-16 overflow-y-auto"
+      >
+        <h1 class="font-space text-[3.5rem] leading-none text-on-surface -ml-1 pb-6 shrink-0">
+          System Overview
+        </h1>
+        <div class="grid grid-cols-2 gap-6 mt-4">
+          <div
+            class="col-span-2 bg-surface-container-low p-10 border border-outline-ghost relative overflow-hidden group"
+          >
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            ></div>
+            <h2
+              class="font-space text-2xl text-primary mb-4 uppercase tracking-widest"
+            >
+              Welcome!
+            </h2>
+            <p
+              class="font-sans text-on-surface leading-relaxed max-w-3xl text-lg mb-6"
+            >
+              Welcome to the greenseer system. The main goal of this system is to provide force multiplication
+              through informational support. This is just a placeholder, there will be news and stuff here.
+            </p>
           </div>
-          <div class="w-2 h-2 md:w-3 md:h-3 bg-primary shadow-[0_0_15px_theme(colors.primary)]"></div>
+
+          <div class="bg-surface-container p-8">
+            <div
+              class="text-outline-variant font-space uppercase tracking-widest text-sm mb-2"
+            >
+              Active Assets
+            </div>
+            <div class="font-space text-5xl text-primary">02</div>
+          </div>
+          <div class="bg-surface-container p-8">
+            <div
+              class="text-outline-variant font-space uppercase tracking-widest text-sm mb-2"
+            >
+              Signal Integrity
+            </div>
+            <div class="font-space text-5xl text-[#dee5ff]">
+              98.4%
+            </div>
+          </div>
         </div>
-        
-        <div class="absolute flex flex-col items-center gap-1 cursor-pointer hover:-translate-y-1 transition-transform duration-200" style="top: 45%; left: 20%;">
-          <div class="bg-outline-ghost text-outline-variant px-[10px] md:px-[14px] py-[4px] md:py-[6px] font-space text-[0.65rem] md:text-[0.75rem] font-bold uppercase tracking-[0.1em] inline-flex items-center gap-2 clip-status">
-            <div class="w-1.5 h-1.5 bg-outline-variant rounded-full"></div>HV-09
+      </div>
+
+      <div
+        id="map-tab"
+        class="workspace hidden flex-1 px-16 pt-16 pb-16 overflow-hidden flex flex-col"
+      >
+        <h1 class="font-space text-[3.5rem] leading-none text-on-surface -ml-1 pb-6 shrink-0">
+          Map
+        </h1>
+        <div
+          class="w-full flex-1 bg-surface-container-low map-grid relative border border-outline-ghost overflow-hidden group"
+        >
+          <div
+            class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,theme(colors.surface-container-low)_100%)] pointer-events-none"
+          ></div>
+
+          <div
+            class="absolute flex flex-col items-center gap-1 cursor-pointer hover:-translate-y-1 transition-transform duration-200"
+            style="top: 30%; left: 45%"
+          >
+            <div
+              class="bg-secondary-container text-on-secondary-container px-[14px] py-[6px] font-space text-[0.75rem] font-bold uppercase tracking-[0.1em] inline-flex items-center gap-2 clip-status"
+            >
+              <div
+                class="w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_8px_theme(colors.primary)] animate-pulse"
+              ></div>
+              HV-01
+            </div>
+            <div
+              class="w-3 h-3 bg-primary shadow-[0_0_15px_theme(colors.primary)]"
+            ></div>
           </div>
-          <div class="w-2 h-2 md:w-3 md:h-3 bg-outline-variant"></div>
+
+          <div
+            class="absolute flex flex-col items-center gap-1 cursor-pointer hover:-translate-y-1 transition-transform duration-200"
+            style="top: 60%; left: 70%"
+          >
+            <div
+              class="bg-secondary-container text-on-secondary-container px-[14px] py-[6px] font-space text-[0.75rem] font-bold uppercase tracking-[0.1em] inline-flex items-center gap-2 clip-status"
+            >
+              <div
+                class="w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_8px_theme(colors.primary)] animate-pulse"
+                style="animation-delay: 0.5s"
+              ></div>
+              HV-04
+            </div>
+            <div
+              class="w-3 h-3 bg-primary shadow-[0_0_15px_theme(colors.primary)]"
+            ></div>
+          </div>
+
+          <div
+            class="absolute flex flex-col items-center gap-1 cursor-pointer hover:-translate-y-1 transition-transform duration-200 opacity-60"
+            style="top: 75%; left: 25%"
+          >
+            <div
+              class="bg-outline-ghost text-outline-variant px-[14px] py-[6px] font-space text-[0.75rem] font-bold uppercase tracking-[0.1em] inline-flex items-center gap-2 clip-status"
+            >
+              Offline
+            </div>
+            <div class="w-3 h-3 bg-outline-variant"></div>
+          </div>
+          
+        </div>
+      </div>
+
+      <div
+        id="data-tab"
+        class="workspace hidden flex-1 px-16 pt-16 pb-16 overflow-hidden flex flex-col"
+      >
+        <h1 class="font-space text-[3.5rem] leading-none text-on-surface -ml-1 pb-6 shrink-0">
+          Telemetry Array
+        </h1>
+        <div class="flex-1 overflow-x-auto overflow-y-auto">
+
+          <table
+            class="w-full min-w-[800px] border-separate border-spacing-y-6"
+          >
+            <thead>
+              <tr>
+                <th
+                  class="font-space uppercase tracking-[0.1rem] text-outline-variant text-left px-6 text-[0.85rem] pb-2"
+                >
+                  Asset name
+                </th>
+                <th
+                  class="font-space uppercase tracking-[0.1rem] text-outline-variant text-left px-6 text-[0.85rem] pb-2"
+                >
+                  Status
+                </th>
+                <th
+                  class="font-space uppercase tracking-[0.1rem] text-outline-variant text-left px-6 text-[0.85rem] pb-2"
+                >
+                  Coordinates
+                </th>
+                <th
+                  class="font-space uppercase tracking-[0.1rem] text-outline-variant text-left px-6 text-[0.85rem] pb-2"
+                >
+                  Fuel / Power
+                </th>
+                <th
+                  class="font-space uppercase tracking-[0.1rem] text-outline-variant text-left px-6 text-[0.85rem] pb-2"
+                >
+                  Last Ping
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr
+                class="bg-surface-container hover:bg-surface-container-highest transition-colors duration-200 group"
+              >
+                <td
+                  class="p-6 text-primary font-space font-bold whitespace-nowrap"
+                >
+                  Assault-Transport-01
+                </td>
+                <td class="p-6">
+                  <div
+                    class="bg-secondary-container text-on-secondary-container px-3 py-1 font-space text-[0.7rem] font-bold uppercase tracking-[0.1em] inline-flex items-center gap-2 clip-status"
+                  >
+                    <div
+                      class="w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_8px_theme(colors.primary)]"
+                    ></div>
+                    Active
+                  </div>
+                </td>
+                <td class="p-6 text-on-surface whitespace-nowrap">
+                  49.2827° N, 123.1207° W
+                </td>
+                <td class="p-6 text-on-surface">84%</td>
+                <td class="p-6 text-on-surface whitespace-nowrap">
+                  00:00:04 ago
+                </td>
+              </tr>
+              <tr
+                class="bg-surface-container hover:bg-surface-container-highest transition-colors duration-200 group"
+              >
+                <td
+                  class="p-6 text-primary font-space font-bold whitespace-nowrap"
+                >
+                  Heavy-Armor-04
+                </td>
+                <td class="p-6">
+                  <div
+                    class="bg-secondary-container text-on-secondary-container px-3 py-1 font-space text-[0.7rem] font-bold uppercase tracking-[0.1em] inline-flex items-center gap-2 clip-status"
+                  >
+                    <div
+                      class="w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_8px_theme(colors.primary)]"
+                    ></div>
+                    Active
+                  </div>
+                </td>
+                <td class="p-6 text-on-surface whitespace-nowrap">
+                  49.2845° N, 123.1112° W
+                </td>
+                <td class="p-6 text-on-surface">62%</td>
+                <td class="p-6 text-on-surface whitespace-nowrap">
+                  00:00:12 ago
+                </td>
+              </tr>
+              <tr
+                class="bg-surface-container hover:bg-surface-container-highest transition-colors duration-200 group opacity-75"
+              >
+                <td
+                  class="p-6 text-outline-variant font-space font-bold whitespace-nowrap"
+                >
+                  Recon-Vehicle-09
+                </td>
+                <td class="p-6">
+                  <div
+                    class="bg-outline-ghost text-outline-variant px-3 py-1 font-space text-[0.7rem] font-bold uppercase tracking-[0.1em] inline-flex items-center gap-2 clip-status"
+                  >
+                    Offline
+                  </div>
+                </td>
+                <td class="p-6 text-on-surface whitespace-nowrap">
+                  49.2712° N, 123.1344° W
+                </td>
+                <td class="p-6 text-outline-variant">--</td>
+                <td class="p-6 text-outline-variant whitespace-nowrap">
+                  14:22:01 ago
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          
         </div>
       </div>
     </div>
 
-    <div id="data-tab" class="workspace hidden flex-1 px-4 md:px-16 pb-8 md:pb-16 overflow-hidden flex flex-col">
-      <div class="flex-1 overflow-x-auto overflow-y-auto">
-        <table class="w-full min-w-[800px] border-separate border-spacing-y-4 md:border-spacing-y-6">
-          <thead>
-            <tr>
-              <th class="font-space uppercase tracking-[0.1rem] text-outline-variant text-left px-4 md:px-6 text-[0.75rem] md:text-[0.85rem] pb-2">Asset Designation</th>
-              <th class="font-space uppercase tracking-[0.1rem] text-outline-variant text-left px-4 md:px-6 text-[0.75rem] md:text-[0.85rem] pb-2">Status</th>
-              <th class="font-space uppercase tracking-[0.1rem] text-outline-variant text-left px-4 md:px-6 text-[0.75rem] md:text-[0.85rem] pb-2">Coordinates</th>
-              <th class="font-space uppercase tracking-[0.1rem] text-outline-variant text-left px-4 md:px-6 text-[0.75rem] md:text-[0.85rem] pb-2">Fuel / Power</th>
-              <th class="font-space uppercase tracking-[0.1rem] text-outline-variant text-left px-4 md:px-6 text-[0.75rem] md:text-[0.85rem] pb-2">Last Ping</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="bg-surface-container hover:bg-surface-container-highest transition-colors duration-200 group">
-              <td class="p-4 md:p-6 text-primary font-space font-bold whitespace-nowrap">Assault-Transport-01</td>
-              <td class="p-4 md:p-6">
-                <div class="bg-secondary-container text-on-secondary-container px-3 py-1 font-space text-[0.65rem] md:text-[0.7rem] font-bold uppercase tracking-[0.1em] inline-flex items-center gap-2 clip-status">
-                  <div class="w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_8px_theme(colors.primary)]"></div>Active
-                </div>
-              </td>
-              <td class="p-4 md:p-6 text-on-surface whitespace-nowrap">49.2827° N, 123.1207° W</td>
-              <td class="p-4 md:p-6 text-on-surface">84%</td>
-              <td class="p-4 md:p-6 text-on-surface whitespace-nowrap">00:00:04 ago</td>
-            </tr>
-            <tr class="bg-surface-container hover:bg-surface-container-highest transition-colors duration-200 group">
-              <td class="p-4 md:p-6 text-primary font-space font-bold whitespace-nowrap">Heavy-Armor-04</td>
-              <td class="p-4 md:p-6">
-                <div class="bg-secondary-container text-on-secondary-container px-3 py-1 font-space text-[0.65rem] md:text-[0.7rem] font-bold uppercase tracking-[0.1em] inline-flex items-center gap-2 clip-status">
-                  <div class="w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_8px_theme(colors.primary)]"></div>Active
-                </div>
-              </td>
-              <td class="p-4 md:p-6 text-on-surface whitespace-nowrap">49.2845° N, 123.1112° W</td>
-              <td class="p-4 md:p-6 text-on-surface">62%</td>
-              <td class="p-4 md:p-6 text-on-surface whitespace-nowrap">00:00:12 ago</td>
-            </tr>
-            <tr class="bg-surface-container hover:bg-surface-container-highest transition-colors duration-200 group opacity-75">
-              <td class="p-4 md:p-6 text-outline-variant font-space font-bold whitespace-nowrap">Recon-Vehicle-09</td>
-              <td class="p-4 md:p-6">
-                <div class="bg-outline-ghost text-outline-variant px-3 py-1 font-space text-[0.65rem] md:text-[0.7rem] font-bold uppercase tracking-[0.1em] inline-flex items-center gap-2 clip-status">
-                  Offline
-                </div>
-              </td>
-              <td class="p-4 md:p-6 text-on-surface whitespace-nowrap">49.2712° N, 123.1344° W</td>
-              <td class="p-4 md:p-6 text-outline-variant">--</td>
-              <td class="p-4 md:p-6 text-outline-variant whitespace-nowrap">14:22:01 ago</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <script>
+      // Switches between tabs on click and changes the visual
+      function switchTab(tabId, element) {
+        // Hide all workspaces
+        document.querySelectorAll(".workspace").forEach((el) => {
+          el.classList.remove("block");
+          el.classList.add("hidden");
+        });
 
-  </div>
+        // Show the target workspace
+        document.getElementById(tabId).classList.remove("hidden");
+        document.getElementById(tabId).classList.add("block");
 
-  <script>
-    function switchTab(tabId, element, titleText) {
-      document.querySelectorAll('.workspace').forEach(el => {
-        el.classList.remove('block');
-        el.classList.add('hidden');
-      });
-      document.getElementById(tabId).classList.remove('hidden');
-      document.getElementById(tabId).classList.add('block');
-      
-      document.querySelectorAll('.nav-item').forEach(el => {
-        el.classList.remove('bg-surface-container-highest', 'text-primary', 'border-primary');
-        el.classList.add('border-transparent', 'text-outline-variant');
-      });
-      
-      element.classList.remove('border-transparent', 'text-outline-variant');
-      element.classList.add('bg-surface-container-highest', 'text-primary', 'border-primary');
+        // Reset all nav items to default state
+        document.querySelectorAll(".nav-item").forEach((el) => {
+          el.classList.remove(
+            "bg-surface-container-highest",
+            "text-primary",
+            "border-primary",
+          );
+          el.classList.add("border-transparent", "text-outline-variant");
+        });
 
-      document.getElementById('view-title').innerText = titleText;
-      
-      // Close mobile menu if open
-      const sidebar = document.getElementById('sidebar');
-      if (!sidebar.classList.contains('-translate-x-full')) {
-        toggleMobileMenu();
+        // Set active state on clicked nav item
+        element.classList.remove("border-transparent", "text-outline-variant");
+        element.classList.add(
+          "bg-surface-container-highest",
+          "text-primary",
+          "border-primary",
+        );
       }
-    }
-
-    function toggleMobileMenu() {
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.getElementById('mobile-overlay');
-      
-      sidebar.classList.toggle('-translate-x-full');
-      overlay.classList.toggle('hidden');
-    }
-  </script>
-</body>
+    </script>
+  </body>
 </html>

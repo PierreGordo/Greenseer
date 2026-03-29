@@ -1,0 +1,18 @@
+{#This file holds the often used components of minijinja, so the greenseer logo and other stuff in the future#}
+
+{% macro brand_logo(svg_classes="w-9 h-9", text_classes="text-[24px]") %}
+<div class="flex items-center justify-center md:justify-start gap-4 font-space select-none">
+  <svg class="block shrink-0 {{ svg_classes }}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <path d="M 5,50 L 30,25 L 70,25 L 95,50 L 70,75 L 30,75 Z" fill="none" stroke="#6bff8f" stroke-width="3" />
+    <path d="M 12,50 L 32,32 L 68,32 L 88,50 L 68,68 L 32,68 Z" fill="#060e20" />
+    <path d="M 50,32 L 66,41 L 66,59 L 50,68 L 34,59 L 34,41 Z" fill="#0abc56" />
+    <path d="M 50,32 L 66,41 L 50,50 Z" fill="#6bff8f" opacity="0.5" />
+    <path d="M 34,41 L 50,32 L 50,50 Z" fill="#005f28" opacity="0.3" />
+    <path d="M 50,40 L 56,50 L 50,60 L 44,50 Z" fill="#060e20" />
+    <path d="M 42,42 L 46,40 L 44,44 Z" fill="#ffffff" opacity="0.9" />
+  </svg>
+  <div class="font-extrabold text-[#f8fafc] tracking-[0.15em] mt-1 {{ text_classes }}">
+    GREEN<span class="text-primary font-light">SEER</span>
+  </div>
+</div>
+{% endmacro %}

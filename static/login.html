@@ -11,6 +11,8 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="config.js"></script>
+
+  
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-surface text-on-surface font-sans h-screen overflow-hidden flex selection:bg-primary selection:text-on-primary">
@@ -18,7 +20,9 @@
   <div class="fixed inset-0 z-50 flex justify-center items-center p-4 bg-[radial-gradient(circle_at_center,theme(colors.surface-container-low)_0%,theme(colors.surface)_100%)]">
     
     <div class="bg-[#192540]/60 backdrop-blur-[20px] p-8 md:p-16 w-full max-w-[480px] border border-outline-ghost shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-      
+
+
+      <!-- LOGO DRAWING -->
       <div class="flex items-center justify-center md:justify-start gap-4 font-space select-none mb-10 md:mb-16">
         <svg class="block w-10 h-10 md:w-12 md:h-12 shrink-0" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <path d="M 5,50 L 30,25 L 70,25 L 95,50 L 70,75 L 30,75 Z" fill="none" stroke="#6bff8f" stroke-width="3" />
@@ -31,20 +35,27 @@
         </svg>
         <div class="text-[24px] md:text-[32px] font-extrabold text-[#f8fafc] tracking-[0.15em] mt-1">GREEN<span class="text-primary font-light">SEER</span></div>
       </div>
+       <!-- END OF LOGO DRAWING -->
 
+
+		<!-- START OF INPUT FORM -->
       <div class="mb-6 w-full">
-        <label class="block font-space uppercase tracking-[0.1rem] text-[0.8rem] text-outline-variant mb-2">Operative ID</label>
+        <label class="block font-space uppercase tracking-[0.1rem] text-[0.8rem] text-outline-variant mb-2">Email</label>
         <input type="text" placeholder="Enter identification code" class="w-full bg-surface-container-high border-b-2 border-primary text-on-surface p-4 font-sans text-base outline-none focus:shadow-[0_4px_15px_rgba(107,255,143,0.15)] transition-shadow duration-300">
       </div>
       
       <div class="mb-6 w-full">
-        <label class="block font-space uppercase tracking-[0.1rem] text-[0.8rem] text-outline-variant mb-2">Clearance Passkey</label>
+        <label class="block font-space uppercase tracking-[0.1rem] text-[0.8rem] text-outline-variant mb-2">Password</label>
         <input type="password" placeholder="••••••••••••" class="w-full bg-surface-container-high border-b-2 border-primary text-on-surface p-4 font-sans text-base outline-none focus:shadow-[0_4px_15px_rgba(107,255,143,0.15)] transition-shadow duration-300">
       </div>
+		<!-- END OF INPUT FORM -->
+
       
       <button onclick="window.location.href='app.html'" class="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary font-space font-extrabold text-base uppercase tracking-[0.15em] p-[18px] mt-6 hover:brightness-125 transition-all duration-300">
-        Initialize Uplink
+        Log in
       </button>
+
+      
     </div>
   </div>
 

@@ -1,0 +1,31 @@
+{#This is the base jinja that will be shared between all other jinja templates#}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}GREENSEER{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600&family=Space+Grotesk:wght@400;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+	{#This script is used for being able to dynamically add elements to the page without having to serve it each time#}
+	<script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../static/config.js"></script>
+    <link rel="stylesheet" href="../static/styles.css" />
+    
+    {% block extra_head %}{% endblock %}
+  </head>
+
+  <body class="bg-surface text-on-surface font-sans h-screen overflow-hidden flex selection:bg-primary selection:text-on-primary {% block body_classes %}{% endblock %}">
+    
+    {% block content %}{% endblock %}
+    
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

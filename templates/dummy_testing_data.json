@@ -1,0 +1,19 @@
+{
+  "user": {
+    "name": "Petr Guláš"
+  },
+  "stats": {
+    "active_assets": "02",
+    "signal_integrity": 98.4
+  },
+  "map_markers": [
+    { "id": "HV-01", "status": "Active", "x": 45, "y": 30 },
+    { "id": "HV-04", "status": "Active", "x": 70, "y": 60 },
+    { "id": "Offline", "status": "Offline", "x": 25, "y": 75 }
+  ],
+  "assets": [
+    { "name": "Assault-Transport-01", "status": "Active", "coords": "49.2827° N, 123.1207° W", "fuel": "84%", "last_ping": "00:00:04" },
+    { "name": "Heavy-Armor-04", "status": "Active", "coords": "49.2845° N, 123.1112° W", "fuel": "62%", "last_ping": "00:00:12" },
+    { "name": "Recon-Vehicle-09", "status": "Offline", "coords": "49.2712° N, 123.1344° W", "fuel": "--", "last_ping": "14:22:01" }
+  ]
+}
