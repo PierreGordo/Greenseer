@@ -5,6 +5,8 @@ edition = "2024"
 
 [dependencies]
 axum = "0.8.8"
+chrono = "0.4.44"
+iso6709parse = "1.0.0"
 minijinja = "2.18.0"
 sqlx = "0.8.6"
 tokio = {version="1.50.0", features=["full"]}
